@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+C:\Users\Ariel\OneDrive - Universidad Nacional de la Matanza\UNLaM\Paradigmas de Programación\2025\Ejercicios de Entrega\probando\.metadata\.plugins\org.eclipse.jdt.core
+302063978.index
+4283578533.index
+1865797976.index
