@@ -36,8 +36,8 @@ public class Rango {
 	}
 	
 	public boolean contiene(double valor) {
-		boolean mayorQueInicio = incluyeInicio ? valor >= inicio : valor > inicio;
-		boolean menorQueFin = incluyeFin ? valor <= fin : valor < fin;
+		boolean mayorQueInicio = this.incluyeInicio ? valor >= this.inicio : valor > this.inicio;
+		boolean menorQueFin = this.incluyeFin ? valor <= this.fin : valor < this.fin;
 		return mayorQueInicio && menorQueFin;
 	}
 	
@@ -46,6 +46,11 @@ public class Rango {
 	}
 	
 	public boolean hayInterseccion(Rango otro) {
+		if(otro.fin == this.inicio && !otro.incluyeFin)  // Ejemplo: 5] y (5
+			return false;
+		if(otro.inicio == this.fin && !otro.incluyeInicio)
+			return false;
+		
 		return this.contiene(otro.inicio) || this.contiene(otro.fin) || otro.contiene(this);
 	}
 	
