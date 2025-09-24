@@ -36,4 +36,9 @@ public class Cuenta {
 	public BigDecimal consultarSaldo() {
 		return this.saldo;
 	}
+	
+	public void transferir(BigDecimal monto, Cuenta cuentaDestino) {
+		this.debitar(monto);  // puede lanzar FondoInsuficienteException o MontoNegativoException
+		cuentaDestino.depositar(monto);  
+	}
 }
