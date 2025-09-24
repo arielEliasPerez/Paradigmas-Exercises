@@ -2,54 +2,56 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.Test;
 
 import cuenta.Cuenta;
+import cuenta.excepciones.MontoNegativoException;
+import cuenta.excepciones.FondoInsuficienteException;
 
 class CuentaTest {
 
 	@Test
 	void MiCuentaTest() {
 		Cuenta miCuenta = new Cuenta();
-		
-		double expectedSaldo = 0;  //no es conveniente acceder directamente a los atributos
-		
-		assertEquals(expectedSaldo, miCuenta.saldo);		
+		BigDecimal expectedSaldo = BigDecimal.ZERO;  
+		assertEquals(expectedSaldo, miCuenta.consultarSaldo());		
 	}
 	
+	@Test
 	void depositoTest() {
 		Cuenta miCuenta = new Cuenta();
 		
-		miCuenta.saldo += 150;
-		double expectedSaldo = 150;
-		assertEquals(expectedSaldo, miCuenta.saldo);
+		miCuenta.depositar(new BigDecimal(500)); // deposito inicial
+		BigDecimal expectedSaldo = new BigDecimal(500);
+		assertEquals(expectedSaldo, miCuenta.consultarSaldo());
 		
-		miCuenta.saldo += 50;
-		expectedSaldo = 200;
-		assertEquals(expectedSaldo, miCuenta.saldo);
+		miCuenta.depositar(new BigDecimal(50));
+		expectedSaldo = new BigDecimal(550);
+		assertEquals(expectedSaldo, miCuenta.consultarSaldo());
 		
-		miCuenta.saldo += -300;
-		expectedSaldo = -100;
-		assertEquals(expectedSaldo, miCuenta.saldo);
-		// No deberia permitir depositar valores negativos
+		assertThrows(MontoNegativoException.class, () -> {
+			miCuenta.depositar(new BigDecimal(-100));   // deposito negativo:
+		});
 	}
 	
-	void retiroTest() {
+	@Test
+	void debitarTest() {
 		Cuenta miCuenta = new Cuenta();
 		
-		miCuenta.saldo += 500; // deposito inicial
-		miCuenta.saldo -= 150; // retiro
-		double expectedSaldo = 350;
-		assertEquals(expectedSaldo, miCuenta.saldo);
+		miCuenta.depositar(new BigDecimal(500)); // deposito inicial
+		miCuenta.debitar(new BigDecimal(150));
+		BigDecimal expectedSaldo = new BigDecimal(350);
+		assertEquals(expectedSaldo, miCuenta.consultarSaldo());
 		
-		miCuenta.saldo -= 50;
-		expectedSaldo = 300;
-		assertEquals(expectedSaldo, miCuenta.saldo);
+		assertThrows(FondoInsuficienteException.class, () -> {
+			miCuenta.debitar(new BigDecimal(400));   // retiro mayor al saldo:
+		});
 		
-		miCuenta.saldo -= 400; // retiro
-		expectedSaldo = -100;
-		assertEquals(expectedSaldo, miCuenta.saldo);
-		// No deberia permitir retirar mas de lo que hay en la cuenta
+		assertThrows(MontoNegativoException.class, () -> {
+			miCuenta.debitar(new BigDecimal(-100));   // retiro negativo:
+		});
 	}
 
 }
