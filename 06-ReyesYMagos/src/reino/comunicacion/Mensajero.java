@@ -2,7 +2,7 @@ package reino.comunicacion;
 
 import java.util.LinkedList;
 
-import exceptions.MensajeroExceptions;
+import exceptions.MensajeroException;
 
 public class Mensajero {
 	LinkedList<Mensaje> mensajes;
@@ -13,7 +13,7 @@ public class Mensajero {
 	
 	public void enviarMensaje(Mensaje mensaje) {
 		if(mensaje == null) {
-			throw new MensajeroExceptions("No se puede enviar un mensaje nulo.");
+			throw new MensajeroException("No se puede enviar un mensaje nulo.");
 		}
 		
 		if(mensaje.getPrioridad() == PrioridadMensaje.ALTA) {
