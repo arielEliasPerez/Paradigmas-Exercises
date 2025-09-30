@@ -5,9 +5,15 @@ import java.util.HashSet;
 import exceptions.MagoException;
 
 public class Mago {
+	private String nombre;
 	private HashSet<Hechizo> hechizos;
 	
 	public Mago() {
+		hechizos = new HashSet<>();
+	}
+	
+	public Mago(String nombre) {
+		this.nombre = nombre;
 		hechizos = new HashSet<>();
 	}
 	
@@ -26,5 +32,13 @@ public class Mago {
 		HashSet<Hechizo> comunes = new HashSet<>(this.hechizos);
 		comunes.retainAll(otroMago.hechizos);
 		return comunes;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!(obj instanceof Mago)) return false;
+		Mago other = (Mago) obj;
+		return this.nombre.equals(other.nombre);
 	}
 }

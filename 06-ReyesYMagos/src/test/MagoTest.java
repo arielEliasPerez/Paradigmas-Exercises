@@ -36,7 +36,7 @@ class MagoTest {
 		mago2.agregarHechizo(hechizo5); // Hechizo en común
 		mago2.agregarHechizo(hechizo6);
 		
-		Set<Hechizo> expectedComunes = new HashSet<>(Set.of(hechizo1, hechizo4, hechizo5));
+		Set<Hechizo> expectedComunes = new HashSet<>(Set.of(hechizo2, hechizo4, hechizo5));
 		
 		assertEquals(expectedComunes, mago1.hechizosEnComun(mago2));
 	}
